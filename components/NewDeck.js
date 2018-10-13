@@ -8,26 +8,29 @@ import {
 	TextInput, 
 	StyleSheet 
 } from 'react-native'
-import { gray, black } from '../utils/colors'
+import { gray, black, white } from '../utils/colors'
 import SubmitButton from './SubmitButton'
 import { saveDeckTitle } from '../utils/api'
+import { NavigationActions } from 'react-navigation'
 
 class NewDeck extends Component {
 	state = {
-		deckTitle: ''
+		title: ''
 	}
 
   handleSubmit = () => {
-    const { deckTitle } = this.state
-
-    this.props.dispatch(addDeck(deckTitle))
-    this.setState({deckTitle: ''})
-    saveDeckTitle(deckTitle)
-    this.setState(() => ({deckTitle: ''}))
+    const { title } = this.state
+    this.props.dispatch(addDeck(title))
+    saveDeckTitle(title)
+    this.setState(() => ({title: ''}))
+    this.props.navigation.navigate(
+        'IndividualDeck',
+        { item: { key: title } }
+      )
   }
 
 	render() {
-		const { deckTitle } = this.state
+		const { title } = this.state
 
 		return (
 			<KeyboardAvoidingView behavior='padding' style={styles.container}>
@@ -35,15 +38,16 @@ class NewDeck extends Component {
         	What is the title of your new deck?
         </Text>
         <TextInput
-        	value={deckTitle}
+        	value={title}
         	style={styles.input}
-        	onChangeText={(deckTitle) => this.setState({deckTitle})}
-          />
+        	onChangeText={(title) => this.setState({title})}
+        />
         <SubmitButton 
-          children={'SUBMIT'} 
-          style={{backgroundColor: black}}
+          children={'Create Deck'} 
+          buttonStyle={{backgroundColor: black}}
+          textStyle={{color: white}}
           onPress={this.handleSubmit}
-          />
+        />
       </KeyboardAvoidingView>
 		)
 	}

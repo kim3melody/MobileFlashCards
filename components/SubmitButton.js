@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import React from 'react'
+import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { black, white } from '../utils/colors'
 
-export default function SubmitButton ({ children, onPress, style = {} }) {
+export default function SubmitButton ({ children, onPress, buttonStyle = {}, textStyle = {} }) {
 	return (
-		<TouchableOpacity onPress={onPress} style={[styles.submitBtn, style]}>
-			<Text style={styles.submitBtnText}>{children}</Text>
+		<TouchableOpacity onPress={onPress} style={[styles.submitBtn, buttonStyle]}>
+			<Text style={[styles.submitBtnText, textStyle]}>{children}</Text>
 		</TouchableOpacity>
 	)
 }
@@ -17,12 +17,11 @@ const styles = StyleSheet.create({
 		paddingLeft: 30,
 		paddingRight: 30,
 		height: 45,
-		borderRadius: 2,
+		borderRadius: 10,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	submitBtnText: {
-		color: white,
 		fontSize: 22,
 		textAlign: 'center',
 	}

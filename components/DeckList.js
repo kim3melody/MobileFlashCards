@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { View, Text, StyleSheet, Platform, TouchableOpacity, FlatList} from 'react-native'
 import { getDecks } from '../utils/api'
-
+import { white, gray } from '../utils/colors'
+import DeckInfo from './DeckInfo'
 
 class DeckList extends Component {
 	
@@ -14,10 +15,15 @@ class DeckList extends Component {
 	}
 
 	renderItem = ({ item }) => (
-		<View>
-			<Text>{item.key}</Text>
-			<Text>{`${item.numberOfCards} cards`}</Text>
-		</View>
+		<TouchableOpacity 
+			style={styles.card}
+			onPress={() => this.props.navigation.navigate(
+				'IndividualDeck',
+				{ item: { key: item.key } }
+			)}
+		>
+			<DeckInfo item={item}/>
+		</TouchableOpacity>
 	)
 
 	render() {
@@ -30,6 +36,13 @@ class DeckList extends Component {
 		)
 	}
 }
+
+const styles = StyleSheet.create({
+  card: {
+    borderBottomWidth: 1,
+    borderBottomColor: gray,
+  },
+})
 
 function mapStateToProps (state) {
 	const deckArray =Object.keys(state).map((key) => ({

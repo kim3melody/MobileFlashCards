@@ -7,18 +7,23 @@ function decks (state= {}, action) {
 				...state,
 				...action.decks,
 			}
-		case ADD_DECK :
+		case ADD_DECK : {
+			const { title } = action
 			return {
 				...state,
-				...action.deck,
+				[title]: {
+					title: title,
+					questions: []
+				}
 			}
+		}			
 		case ADD_QUESTION : {
-			const { key, question } = action
+			const { title, card } = action
 			return {
 				...state,
-				[key]: {
-					...state[key],
-					questions: state[key].questions.concat([question])
+				[title]: {
+					...state[title],
+					questions: state[title].questions.concat([card])
 				}
 			}
 		}
