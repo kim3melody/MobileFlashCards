@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addQuestion } from '../actions'
 import { 
-	KeyboardAvoidingView, 
-	TouchableOpacity, 
-	Text,
-	TextInput, 
-	StyleSheet ,
+  KeyboardAvoidingView, 
+  TouchableOpacity, 
+  Text,
+  TextInput, 
+  StyleSheet ,
   Alert,
 } from 'react-native'
 import { gray, black, white } from '../utils/colors'
@@ -19,10 +19,10 @@ class NewQuestion extends Component {
     return { title: 'Add Card' }
   }
 
-	state = {
-		question: '',
+  state = {
+	question: '',
     answer: '',
-	}
+  }
 
   handleSubmit = () => {
     const title = this.props.item.key
@@ -43,33 +43,32 @@ class NewQuestion extends Component {
     this.props.navigation.dispatch(NavigationActions.back())
   }
 
-	render() {
+  render() {
+	const { question, answer } = this.state
 
-		const { question, answer } = this.state
-
-		return (
-			<KeyboardAvoidingView behavior='padding' style={styles.container}>
+	return (
+	  <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <TextInput
           value={question}
           placeholder={'Enter the question here'}
           style={styles.input}
-          onChangeText={(q) => this.setState({...this.state, question: q})}
+          onChangeText={(q) => this.setState({question: q})}
         />
         <TextInput
           value={answer}
           placeholder={'Enter the answer here'}
           style={styles.input}
-          onChangeText={(a) => this.setState({...this.state, answer: a})}
+          onChangeText={(a) => this.setState({answer: a})}
         />
         <SubmitButton 
-          children={'Submit'} 
+          children='Submit'
           buttonStyle={{backgroundColor: black}}
           textStyle={{color: white}}
           onPress={this.handleSubmit}
         />
       </KeyboardAvoidingView>
-		)
-	}
+	)
+  }
 }
 
 const styles = StyleSheet.create({

@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 import { 
-	KeyboardAvoidingView, 
-	TouchableOpacity, 
-	Text,
-	TextInput, 
-	StyleSheet 
+  KeyboardAvoidingView, 
+  TouchableOpacity, 
+  Text,
+  TextInput, 
+  StyleSheet,
+  Alert
 } from 'react-native'
 import { gray, black, white } from '../utils/colors'
 import SubmitButton from './SubmitButton'
@@ -14,43 +15,54 @@ import { saveDeckTitle } from '../utils/api'
 import { NavigationActions } from 'react-navigation'
 
 class NewDeck extends Component {
-	state = {
-		title: ''
-	}
+  state = {
+	title: ''
+  }
 
   handleSubmit = () => {
     const { title } = this.state
+
+    if (title === '') {
+      Alert.alert(
+        'Invalid inputs',
+        'Please enter the name of the deck',
+        [{text: 'OK', onPress: () => {}}],
+        { cancelable: false}
+      )
+      return
+    }
+
     this.props.dispatch(addDeck(title))
     saveDeckTitle(title)
     this.setState(() => ({title: ''}))
     this.props.navigation.navigate(
-        'IndividualDeck',
-        { item: { key: title } }
-      )
+      'IndividualDeck',
+      { item: { key: title } }
+    )
   }
 
-	render() {
-		const { title } = this.state
+  render() {
+    const { title } = this.state
 
-		return (
-			<KeyboardAvoidingView behavior='padding' style={styles.container}>
+    return (
+      <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <Text style={styles.infoText}>
         	What is the title of your new deck?
         </Text>
         <TextInput
-        	value={title}
-        	style={styles.input}
-        	onChangeText={(title) => this.setState({title})}
+          value={title}
+          style={styles.input}
+          onChangeText={(title) => this.setState({title})}
         />
         <SubmitButton 
-          children={'Create Deck'} 
+          children='Create Deck'
           buttonStyle={{backgroundColor: black}}
           textStyle={{color: white}}
           onPress={this.handleSubmit}
         />
       </KeyboardAvoidingView>
-		)
-	}
+    )
+  }
 }
 
 const styles = StyleSheet.create({

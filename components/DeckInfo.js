@@ -1,22 +1,17 @@
 import React, { Component } from 'react'
 import {
-	View, 
-	Text,
-	StyleSheet 
+  View, 
+  Text,
+  StyleSheet 
 } from 'react-native'
 import { white, gray } from '../utils/colors'
 
-export default class DeckInfo extends Component {
-	render() {
-		const { item } = this.props
-		return (
-			<View style={styles.item}>
-				<Text style={styles.titleText}>{item.key}</Text>
-				<Text style={styles.infoText}>{`${item.numberOfCards} cards`}</Text>
-			</View>
-		)
-	}
-}
+const DeckInfo = ({ item }) => (
+  <View style={styles.item}>
+	<Text style={styles.titleText}>{item.key}</Text>
+	<Text style={styles.infoText}>{`${item.numberOfCards} cards`}</Text>
+  </View>
+)
 
 const styles = StyleSheet.create({
   item: {
@@ -38,3 +33,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 })
+
+export default DeckInfo

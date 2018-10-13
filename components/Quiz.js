@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { 
-	View, 
-	TouchableOpacity, 
-	Text,
-	TextInput, 
-	StyleSheet ,
+  View, 
+  TouchableOpacity, 
+  Text,
+  TextInput, 
+  StyleSheet ,
 } from 'react-native'
 import { gray, black, white, green, red } from '../utils/colors'
 import TextButton from './TextButton'
@@ -18,11 +18,11 @@ class Quiz extends Component {
     return { title: 'Quiz' }
   }
 
-	state = {
+  state = {
     index: 0,
-		side: 'front',
+	side: 'front',
     correct: 0
-	}
+  }
 
   handleCorrect = () => {
     this.setState((state) => ({
@@ -61,34 +61,38 @@ class Quiz extends Component {
     this.props.navigation.dispatch(NavigationActions.back())
   }
 
-  summaryView = () => (
-    <View style={styles.container}>
-        <Text style={styles.progress}>
-         {`Quiz completed`}
+  summaryView = () => {
+    const { container, progress, body, question } = styles
+    return (
+      <View style={container}>
+        <Text style={progress}>
+          {`Quiz completed`}
         </Text>
-        <View style={styles.body}>
-          <Text style={styles.question}>
+        <View style={body}>
+          <Text style={question}>
             {`Score: ${this.state.correct} / ${this.props.questions.length}`}
           </Text>
           <SubmitButton 
-            children={'Start Over'} 
+            children='Start Over'
             buttonStyle={{backgroundColor: black, width: 200}}
             textStyle={{color: white}}
             onPress={this.startOver}
           />
           <SubmitButton 
-            children={'Go Back'} 
+            children='Go Back'
             buttonStyle={{backgroundColor: black, width: 200}}
             textStyle={{color: white}}
             onPress={this.goBack}
           />
         </View>
       </View>
-  )
+    )
+  }
 
-	render() {
-		const { index, side } = this.state
+  render() {
+	const { index, side } = this.state
     const { questions } = this.props
+    const { container, progress, body, question } = styles
 
     if (index === questions.length) {
       clearLocalNotification()
@@ -96,13 +100,13 @@ class Quiz extends Component {
       return (this.summaryView())
     }
 
-		return (
-      <View style={styles.container}>
-        <Text style={styles.progress}>
+	return (
+      <View style={container}>
+        <Text style={progress}>
          {`${index+1} / ${questions.length}`}
         </Text>
-        <View style={styles.body}>
-          <Text style={styles.question}>
+        <View style={body}>
+          <Text style={question}>
             {side === 'front' 
               ? questions[index].question 
               : questions[index].answer}
@@ -112,13 +116,13 @@ class Quiz extends Component {
             onPress={this.flipCard}
           />
           <SubmitButton 
-            children={'Correct'} 
+            children='Correct'
             buttonStyle={{backgroundColor: green, width: 200}}
             textStyle={{color: white}}
             onPress={this.handleCorrect}
           />
           <SubmitButton 
-            children={'Incorrect'} 
+            children='Incorrect'
             buttonStyle={{backgroundColor: red, width: 200}}
             textStyle={{color: white}}
             onPress={this.handleWrong}

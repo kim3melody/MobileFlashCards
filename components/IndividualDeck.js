@@ -17,7 +17,7 @@ class IndividualDeck extends Component {
       <View style={styles.container}>
         <DeckInfo item={item} />
         <SubmitButton 
-          children={'Add Card'} 
+          children='Add Card' 
           buttonStyle={{
             backgroundColor: white,
             borderWidth: 2,
@@ -30,7 +30,7 @@ class IndividualDeck extends Component {
           )}
         />
         <SubmitButton 
-          children={'Start Quiz'} 
+          children='Start Quiz'
           buttonStyle={{backgroundColor: black}}
           textStyle={{color: white}}
           onPress={() => this.props.navigation.navigate(
